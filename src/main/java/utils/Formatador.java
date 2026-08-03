@@ -8,7 +8,7 @@ import model.Vendedor;
 import java.util.List;
 
 public class Formatador {
-    public void imprimirPessoa(Pessoa pessoa) {
+    public void imprimirPerfilPessoa(Pessoa pessoa) {
         System.out.println("//------- Dados de: " + pessoa.getNome() + "-------//");
 
         System.out.println("Nome: " + pessoa.getNome());
@@ -19,7 +19,7 @@ public class Formatador {
         System.out.println("///----------------------------------------------------/");
     }
 
-    public void imprimirServico(Servico servico) {
+    public void imprimirDetalheServico(Servico servico) {
         System.out.println("//------- Dados de: " + servico.getTitulo() + "-------//");
 
         System.out.println("Titulo: " + servico.getTitulo());
@@ -69,6 +69,7 @@ public class Formatador {
     }
 
     public void imprimirListaServicosAVenda(Vendedor vendedor) {
+
 
     }
 }

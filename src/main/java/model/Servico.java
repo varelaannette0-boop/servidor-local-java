@@ -1,5 +1,7 @@
 package model;
 
+import utils.Formatador;
+
 public class Servico {
 
     private String titulo;

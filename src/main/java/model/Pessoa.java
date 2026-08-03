@@ -13,6 +13,10 @@ public class Pessoa {
 
     private List<Servico> servicosComprados;
 
+    public List<Servico> getCarrinhoDeCompras() {
+        return getServicosComprados();
+    }
+
 
     public Pessoa(String novoNome, String novaMorada, int novaIdade, Double novoSaldo) {
         this.nome = novoNome;
