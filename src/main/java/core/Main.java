@@ -1,9 +1,15 @@
 package core;
 
+import com.google.gson.Gson;
 import model.Pessoa;
+import model.ProdutoExterno;
 import model.Servico;
-import utils.Formatador;
 import utils.ExportadorDados;
+
+import java.net.URI;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 
 
 public class Main {
@@ -51,10 +57,49 @@ public class Main {
         exportador.exportarCarrinhoParaJson(cliente);
 
 
+        try {
+            HttpClient client = HttpClient.newHttpClient();
+
+            HttpRequest pedido = HttpRequest.newBuilder()
+                    .uri(URI.create("https://dummyjson.com/products/1"))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> resposta = client.send(pedido, HttpResponse.BodyHandlers.ofString());
+
+            Gson tradutor = new Gson();
+            ProdutoExterno produto = tradutor.fromJson(resposta.body(), ProdutoExterno.class);
+
+
+            System.out.println("Codigo de resposta " + resposta.statusCode());
+            System.out.println("Dados de resposta: " + resposta.body());
+
+            System.out.println(
+                    "O produto importado é o "
+                            + produto.getTitle()
+                            + " e custa "
+                            + produto.getPrice()
+                            + " dólares"
+            );
+
+        } catch(Exception e) {
+            System.out.println("erro ao chamar api:" + e.getMessage());
+        }
 
 
     }
-}
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
