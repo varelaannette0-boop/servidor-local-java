@@ -31,10 +31,9 @@ function Registo() {
 
       if (resposta.ok) {
         alert("Conta criada com sucesso!");
-
         navigate("/");
       } else {
-        alert(dados.message || "Erro ao criar conta.");
+        alert(dados.message || dados.erro || "Erro ao criar conta.");
       }
     } catch (erro) {
       console.error(erro);
@@ -43,62 +42,68 @@ function Registo() {
   };
 
   return (
-    <div>
-      <h1>Criar Conta</h1>
+    <div className="auth-page">
+      <div className="auth-card">
 
-      <form onSubmit={fazerRegisto}>
-        <div>
-          <label>Username</label>
-          <br />
-
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+        <div className="auth-header">
+          <h1>Criar Conta ✨</h1>
+          <p>Preencha os dados para criar a sua conta</p>
         </div>
 
-        <br />
+        <form onSubmit={fazerRegisto} className="auth-form">
 
-        <div>
-          <label>Email</label>
-          <br />
+          <div className="form-group">
+            <label>Username</label>
+            <input
+              type="text"
+              placeholder="Digite o seu username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Digite o seu email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Digite a sua password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
+
+          <button type="submit" className="primary-button">
+            Registar
+          </button>
+
+        </form>
+
+        <div className="auth-footer">
+          <p>Já tem uma conta?</p>
+
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => navigate("/")}
+          >
+            Voltar para Login
+          </button>
         </div>
 
-        <br />
-
-        <div>
-          <label>Password</label>
-          <br />
-
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
-
-        <br />
-
-        <button type="submit">
-          Registar
-        </button>
-      </form>
-
-      <br />
-
-      <button onClick={() => navigate("/")}>
-        Voltar para Login
-      </button>
+      </div>
     </div>
   );
 }

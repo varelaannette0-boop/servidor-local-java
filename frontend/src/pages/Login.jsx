@@ -43,48 +43,53 @@ function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-
-      <form onSubmit={fazerLogin}>
-        <div>
-          <label>Username</label>
-          <br />
-
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+    <div className="auth-page">
+      <div className="auth-card">
+        <div className="auth-header">
+          <h1>Bem-vindo 👋</h1>
+          <p>Entre na sua conta para continuar</p>
         </div>
 
-        <br />
+        <form onSubmit={fazerLogin} className="auth-form">
+          <div className="form-group">
+            <label>Username</label>
+            <input
+              type="text"
+              placeholder="Digite o seu username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
 
-        <div>
-          <label>Password</label>
-          <br />
+          <div className="form-group">
+            <label>Password</label>
+            <input
+              type="password"
+              placeholder="Digite a sua password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+          </div>
 
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+          <button type="submit" className="primary-button">
+            Entrar
+          </button>
+        </form>
+
+        <div className="auth-footer">
+          <p>Ainda não tem uma conta?</p>
+
+          <button
+            type="button"
+            className="secondary-button"
+            onClick={() => navigate("/registo")}
+          >
+            Criar conta
+          </button>
         </div>
-
-        <br />
-
-        <button type="submit">
-          Entrar
-        </button>
-      </form>
-
-      <br />
-
-      <button onClick={() => navigate("/registo")}>
-        Criar conta
-      </button>
+      </div>
     </div>
   );
 }

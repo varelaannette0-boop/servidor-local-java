@@ -60,13 +60,13 @@ function Dashboard() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-  titulo,
-  descricao,
-  preco: Number(preco),
-  estaAtivo,
-  precoComDesconto: Number(preco),
-  imagemCapa: null,
-}),
+            titulo,
+            descricao,
+            preco: Number(preco),
+            estaAtivo,
+            precoComDesconto: Number(preco),
+            imagemCapa: null,
+          }),
         }
       );
 
@@ -75,7 +75,11 @@ function Dashboard() {
       console.log("SERVIÇO CRIADO:", dados);
 
       if (!resposta.ok) {
-        alert(dados.mensagem || dados.message || "Erro ao criar serviço.");
+        alert(
+          dados.mensagem ||
+            dados.message ||
+            "Erro ao criar serviço."
+        );
         return;
       }
 
@@ -99,105 +103,153 @@ function Dashboard() {
   };
 
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div className="dashboard-page">
 
-      <button onClick={fazerLogout}>
-        Logout
-      </button>
-
-      <hr />
-
-      <h2>Criar Serviço</h2>
-
-      <form onSubmit={criarServico}>
+      {/* Cabeçalho */}
+      <header className="dashboard-header">
         <div>
-          <label>Título</label>
-          <br />
-
-          <input
-            type="text"
-            value={titulo}
-            onChange={(e) => setTitulo(e.target.value)}
-            required
-          />
+          <h1>Dashboard</h1>
+          <p>Gerencie os seus serviços</p>
         </div>
 
-        <br />
-
-        <div>
-          <label>Descrição</label>
-          <br />
-
-          <textarea
-            value={descricao}
-            onChange={(e) => setDescricao(e.target.value)}
-            required
-          />
-        </div>
-
-        <br />
-
-        <div>
-          <label>Preço</label>
-          <br />
-
-          <input
-            type="number"
-            step="0.01"
-            value={preco}
-            onChange={(e) => setPreco(e.target.value)}
-            required
-          />
-        </div>
-
-        <br />
-
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={estaAtivo}
-              onChange={(e) => setEstaAtivo(e.target.checked)}
-            />
-            {" "}Serviço ativo
-          </label>
-        </div>
-
-        <br />
-
-        <button type="submit">
-          Criar Serviço
+        <button
+          onClick={fazerLogout}
+          className="logout-button"
+        >
+          Sair
         </button>
-      </form>
+      </header>
 
-      <hr />
+      <main className="dashboard-content">
 
-      <h2>Serviços</h2>
+        {/* Criar serviço */}
+        <section className="service-form-card">
+          <div className="section-title">
+            <h2>➕ Criar Serviço</h2>
+            <p>Adicione um novo serviço à plataforma</p>
+          </div>
 
-      {carregando ? (
-        <p>A carregar serviços...</p>
-      ) : servicos.length === 0 ? (
-        <p>Nenhum serviço encontrado.</p>
-      ) : (
-        <div>
-          {servicos.map((servico) => (
-            <div key={servico.id}>
-              <h3>{servico.titulo}</h3>
+          <form onSubmit={criarServico} className="service-form">
 
-              <p>{servico.descricao}</p>
+            <div className="form-group">
+              <label>Título</label>
 
-              <p>Preço: {servico.preco}</p>
-
-              <p>
-                Estado: {servico.estaAtivo ? "Ativo" : "Inativo"}
-              </p>
-
-              <hr />
+              <input
+                type="text"
+                placeholder="Digite o título do serviço"
+                value={titulo}
+                onChange={(e) => setTitulo(e.target.value)}
+                required
+              />
             </div>
-          ))}
-        </div>
-      )}
+
+            <div className="form-group">
+              <label>Descrição</label>
+
+              <textarea
+                placeholder="Digite a descrição do serviço"
+                value={descricao}
+                onChange={(e) => setDescricao(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="form-group">
+              <label>Preço</label>
+
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                placeholder="0.00"
+                value={preco}
+                onChange={(e) => setPreco(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="checkbox-group">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={estaAtivo}
+                  onChange={(e) =>
+                    setEstaAtivo(e.target.checked)
+                  }
+                />
+
+                <span>Serviço ativo</span>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              className="create-button"
+            >
+              Criar Serviço
+            </button>
+
+          </form>
+        </section>
+
+        {/* Lista de serviços */}
+        <section className="services-section">
+
+          <div className="section-title">
+            <h2>📋 Serviços</h2>
+            <p>Serviços disponíveis na plataforma</p>
+          </div>
+
+          {carregando ? (
+            <div className="loading">
+              <p>A carregar serviços...</p>
+            </div>
+          ) : servicos.length === 0 ? (
+            <div className="empty-state">
+              <p>Nenhum serviço encontrado.</p>
+            </div>
+          ) : (
+            <div className="services-grid">
+
+              {servicos.map((servico) => (
+                <div
+                  className="service-card"
+                  key={servico.id}
+                >
+                  <div className="service-card-header">
+
+                    <h3>{servico.titulo}</h3>
+
+                    <span
+                      className={
+                        servico.estaAtivo
+                          ? "status active"
+                          : "status inactive"
+                      }
+                    >
+                      {servico.estaAtivo
+                        ? "Ativo"
+                        : "Inativo"}
+                    </span>
+
+                  </div>
+
+                  <p className="service-description">
+                    {servico.descricao}
+                  </p>
+
+                  <div className="service-price">
+                    {servico.preco} €
+                  </div>
+                </div>
+              ))}
+
+            </div>
+          )}
+
+        </section>
+
+      </main>
     </div>
   );
 }
