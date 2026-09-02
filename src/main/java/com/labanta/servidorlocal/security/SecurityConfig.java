@@ -76,6 +76,8 @@ public class SecurityConfig {
                                 HttpMethod.GET,
                                 "/api/v1/servicos/**"
                         ).permitAll()
+                        .requestMatchers("/error")
+                        .permitAll()
 
                         // =====================================
                         // RESTANTE - PROTEGIDO
